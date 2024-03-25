@@ -1,29 +1,44 @@
 const express = require("express");
-const fileUpload = require("express-fileupload");
 const app = express();
+const database = require("./Config/database");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const { cloudinaryConnect } = require("./Config/cloudinary");
+const fileUpload = require("express-fileupload");
+const dotenv = require("dotenv");
 
-require("dotenv").config();
-const PORT = process.env.PORT || 4000;
+dotenv.config();
+database.connect();
 
+// Middlewares
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors()); // Enable CORS for all routes
 app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+    })
 );
 
-const cloudinary = require("./Config/cloudinary");
-cloudinary.cloudinaryConnect();
+cloudinaryConnect();
 
-app.listen(PORT, () => {
-  console.log(`Server is running...`);
+// importing routes
+const userRoutes = require("./Routes/User");
+
+// defining routes
+app.use("/api/v1/auth", userRoutes);
+
+const PORT = process.env.PORT || 8000;
+
+// Route to check service status
+app.get("/", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Service is Up and Running",
+    });
 });
 
-app.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    status: "Normal",
-    message: "Service is Up",
-  });
+app.listen(PORT, () => {
+    console.log(`Server started at PORT ${PORT}`);
 });
