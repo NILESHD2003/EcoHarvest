@@ -113,6 +113,13 @@ h3 {
       border-bottom: 2px solid green;
     }
   }
+  &__text {
+    text-align: center;
+    margin-top: 2rem;
+    a {
+      cursor: pointer;
+    }
+  }
 }
 
 .btn {
@@ -136,5 +143,45 @@ h3 {
   }
   &--upload {
     width: 30%;
+  }
+}
+
+.green {
+  color: #80ff00;
+}
+
+.otp {
+  h3 {
+    color: #7ef20a;
+  }
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 200px;
+  margin: 0 auto;
+  &--input {
+    background-color: rgba(128, 128, 128, 0.292);
+    margin-bottom: 1rem;
+    margin-top: 20px;
+    width: 50px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+  &--btn {
+    border: none;
+    outline: none;
+    padding: 7px 20px;
+    border-radius: 10px;
+    color: white;
   }
 }

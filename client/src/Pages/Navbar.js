@@ -1,12 +1,24 @@
 import React, { useState } from "react";
-import { Nav_link } from "../Utils/Navlinks";
+import { logout } from "../Slice/authSlice";
 import { NavLink, Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const dispatch = useDispatch();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+  };
+
+  const Nav_link = [
+    { name: "Home", link: "/home" },
+    { name: "Features", link: "/features1" },
+    { name: "Contact", link: "/contact" },
+    { name: "Log-Out", link: "/", onClick: handleLogout }, // Add onClick event handler for logout
+  ];
+
   return (
     <>
       <nav className="nav">
@@ -24,6 +36,7 @@ const Navbar = () => {
                     <NavLink
                       to={item.link}
                       className="nav__no"
+                      onClick={item.onClick}
                       activeClassName="active"
                     >
                       {item.name}
@@ -39,6 +52,7 @@ const Navbar = () => {
                 <NavLink
                   to={item.link}
                   className="nav__no"
+                  onClick={item.onClick}
                   activeClassName="active"
                 >
                   {item.name}

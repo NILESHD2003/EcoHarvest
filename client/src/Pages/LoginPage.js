@@ -10,14 +10,18 @@ const LoginPage = () => {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-
+  const handleClick = () => {
+    navigate("/sign_up");
+  };
   const onSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
 
     try {
       const { email, password } = values;
       await dispatch(loginAsync({ email, password }));
-      navigate("/home"); // Navigate to home page after successful login
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
     } catch (error) {
       // Handle login error
       console.error("Login error:", error);
@@ -56,6 +60,12 @@ const LoginPage = () => {
         <button type="submit" className="btn btn--green">
           Login
         </button>
+        <p className="form__text">
+          Don't have an account?{" "}
+          <a onClick={handleClick} className=" green">
+            Sign Up
+          </a>
+        </p>
       </form>
     </div>
   );
