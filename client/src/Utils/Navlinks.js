@@ -1,9 +1,3 @@
-const Nav_link = [
-  { name: "Home", link: "/home" },
-  { name: "features", link: "/features1" },
-  { name: "Contact", link: "/contact" },
-];
-
 const Card_info = [
   {
     img: "https://th.bing.com/th/id/OIP.ZzfYvy4k_egFzKIlUGwDiAHaE8?rs=1&pid=ImgDetMain",
@@ -25,4 +19,21 @@ const Card_info = [
   },
 ];
 
-export { Nav_link, Card_info };
+const Feautres = [
+  {
+    img: "https://th.bing.com/th/id/OIP.ZzfYvy4k_egFzKIlUGwDiAHaE8?rs=1&pid=ImgDetMain",
+    Heading: "Fertilizer Prediction",
+    link: "/Features1",
+  },
+  {
+    img: "https://th.bing.com/th/id/OIP.ZzfYvy4k_egFzKIlUGwDiAHaE8?rs=1&pid=ImgDetMain",
+    Heading: "Fertilizer Prediction",
+    link: "/Features2",
+  },
+  {
+    img: "https://th.bing.com/th/id/OIP.ZzfYvy4k_egFzKIlUGwDiAHaE8?rs=1&pid=ImgDetMain",
+    Heading: "Fertilizer Prediction",
+    link: "/Features1",
+  },
+];
+export { Card_info, Feautres };
