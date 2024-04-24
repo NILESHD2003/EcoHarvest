@@ -6,3 +6,4 @@ scikit-learn
 pytorch
 PIL
 pickle
+gunicorn
