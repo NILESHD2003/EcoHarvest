@@ -2,7 +2,7 @@
 pandas
 Flask
 matplotlib
-sklearn
+scikit-learn
 pytorch
 PIL
 pickle
