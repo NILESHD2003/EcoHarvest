@@ -4,6 +4,6 @@ Flask
 matplotlib
 scikit-learn
 pytorch
-PIL
+Pillow
 pickle
 gunicorn
