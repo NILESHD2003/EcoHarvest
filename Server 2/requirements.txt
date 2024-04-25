@@ -2,7 +2,10 @@
 pandas
 Flask
 matplotlib
-sklearn
-pytorch
-PIL
-pickle
+scikit-learn
+torch
+Pillow
+torchvision
+joblib
+json
+gunicorn
