@@ -6,6 +6,4 @@ scikit-learn
 torch
 Pillow
 torchvision
-joblib
-json
 gunicorn
