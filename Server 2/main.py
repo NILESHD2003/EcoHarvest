@@ -72,7 +72,7 @@ def predict():
 
 ###################################### FERTILIZER  PREDICTION  pickle  ################################## 
 #Load the trained model
-with open('fertilizer_prediction.pkl','rb') as f1:
+with open('fertilizer_predicton.pkl','rb') as f1:
     model_fertilizer_predict=pickle.load(f1)
 
 ###################################### FERTILIZER  PREDICTION  API  ##################################
