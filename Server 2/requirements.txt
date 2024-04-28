@@ -5,6 +5,5 @@ matplotlib
 scikit-learn
 torch
 Pillow
-json
 torchvision
 gunicorn
