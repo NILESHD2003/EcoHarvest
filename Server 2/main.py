@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from torchvision import models, transforms
 from PIL import Image
-
+import pandas as pd
+import json
 import torch
 import base64
 import gzip
@@ -69,39 +70,65 @@ def predict():
 ###################################### PLANT DISEASE DETECTION API  ##################################  
 
 
-###################################### FERTILIZER  PREDICTION  jOBLIB  ################################## 
-# with open('trained_model.joblib','rb') as f1:
-#     model_fertilizer=joblib.load(f1)
+###################################### FERTILIZER  PREDICTION  pickle  ################################## 
+#Load the trained model
+with open('fertilizer_prediction.pkl','rb') as f1:
+    model_fertilizer_predict=pickle.load(f1)
 
 ###################################### FERTILIZER  PREDICTION  API  ##################################
-# @app.route('/predict/fertilizer',methods=['POST'])
-# def predict_fertilizer():
-#     data = request.get_json()
+# Load the encoded categories
+with open('encoded_categories.json', 'r') as f_category:
+    encoded_categories = json.load(f_category)
 
-#     temperature = data['Temperature']
-#     humidity = data['Humidity']
-#     moisture = data['Moisture']
-#     soil_type = data['Soil Type']
-#     crop_type = data['Crop Type']
-#     nitrogen = data['Nitrogen']
-#     potassium = data['Potassium']
-#     phosphorous = data['Phosphorous']
+@app.route('/predict/fertilizer', methods=['POST'])
+def predict():
+    data = request.get_json()
 
-#     encoded_soil_type = encoded_categories['Soil Type'].get(soil_type, None)
-#     encoded_crop_type = encoded_categories['Crop Type'].get(crop_type, None)
+    temperature = data['Temperature']
+    humidity = data['Humidity']
+    moisture = data['Moisture']
+    soil_type = data['Soil Type']
+    crop_type = data['Crop Type']
+    nitrogen = data['Nitrogen']
+    potassium = data['Potassium']
+    phosphorous = data['Phosphorous']
 
-#     if encoded_soil_type is None:
-#         return jsonify({'error': f"'{soil_type}' not found in encoded categories for Soil Type."}), 400
-#     if encoded_crop_type is None:
-#         return jsonify({'error': f"'{crop_type}' not found in encoded categories for Crop Type."}), 400
+    encoded_soil_type = encoded_categories['Soil Type'].get(soil_type, None)
+    encoded_crop_type = encoded_categories['Crop Type'].get(crop_type, None)
 
-#     prediction = model_fertilizer.predict([[temperature, humidity, moisture, encoded_soil_type, encoded_crop_type, nitrogen, potassium, phosphorous]])
+    if encoded_soil_type is None:
+        return jsonify({'error': f"'{soil_type}' not found in encoded categories for Soil Type."}), 400
+    if encoded_crop_type is None:
+        return jsonify({'error': f"'{crop_type}' not found in encoded categories for Crop Type."}), 400
 
-#     predicted_fertilizer_name = prediction[0]
+    prediction = model_fertilizer_predict.predict([[temperature, humidity, moisture, encoded_soil_type, encoded_crop_type, nitrogen, potassium, phosphorous]])
 
-#     return jsonify({'predicted_fertilizer_name': predicted_fertilizer_name})
+    predicted_fertilizer_name = prediction[0]
+
+    return jsonify({'predicted_fertilizer_name': predicted_fertilizer_name})
+
+
 
 ###################################### FERTILIZER  PREDICTION  API  ##################################
+
+###################################### CROP  PREDICTION  pickle  ################################## 
+#Load the trained model
+with open('crop_prediction.pkl','rb') as f2:
+    model_crop_predict=pickle.load(f2)
+###################################### CROP  PREDICTION  API  ##################################    
+@app.route('/predict/crop', methods=['POST'])
+def predict():
+    data = request.get_json()
+    input_data = pd.DataFrame(data, index=[0])
+    prediction = model_crop_predict.predict(input_data)
+    response = {'prediction': prediction[0]}
+
+    return jsonify(response)
+
+
+
+###################################### CROP  PREDICTION  API  ##################################    
+
 
 if __name__ == '__main__':
     app.run(debug=True)
