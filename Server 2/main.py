@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from torchvision import models, transforms
 from PIL import Image
+import pandas as pd
+import json
 import torch
 import base64
 import gzip
@@ -68,13 +70,18 @@ def predict():
 ###################################### PLANT DISEASE DETECTION API  ##################################  
 
 
-###################################### FERTILIZER  PREDICTION  jOBLIB  ################################## 
-with open('trained_model.joblib','rb') as f1:
-    model_fertilizer=joblib.load(f1)
+###################################### FERTILIZER  PREDICTION  pickle  ################################## 
+#Load the trained model
+with open('fertilizer_predicton.pkl','rb') as f1:
+    model_fertilizer_predict=pickle.load(f1)
 
 ###################################### FERTILIZER  PREDICTION  API  ##################################
-@app.route('/predict/fertilizer',methods=['POST'])
-def predict_fertilizer():
+# Load the encoded categories
+with open('encoded_categories.json', 'r') as f_category:
+    encoded_categories = json.load(f_category)
+
+@app.route('/predict/fertilizer', methods=['POST'])
+def predict():
     data = request.get_json()
 
     temperature = data['Temperature']
@@ -94,13 +101,34 @@ def predict_fertilizer():
     if encoded_crop_type is None:
         return jsonify({'error': f"'{crop_type}' not found in encoded categories for Crop Type."}), 400
 
-    prediction = model_fertilizer.predict([[temperature, humidity, moisture, encoded_soil_type, encoded_crop_type, nitrogen, potassium, phosphorous]])
+    prediction = model_fertilizer_predict.predict([[temperature, humidity, moisture, encoded_soil_type, encoded_crop_type, nitrogen, potassium, phosphorous]])
 
     predicted_fertilizer_name = prediction[0]
 
     return jsonify({'predicted_fertilizer_name': predicted_fertilizer_name})
 
+
+
 ###################################### FERTILIZER  PREDICTION  API  ##################################
+
+###################################### CROP  PREDICTION  pickle  ################################## 
+#Load the trained model
+with open('crop_prediction.pkl','rb') as f2:
+    model_crop_predict=pickle.load(f2)
+###################################### CROP  PREDICTION  API  ##################################    
+@app.route('/predict/crop', methods=['POST'])
+def predict():
+    data = request.get_json()
+    input_data = pd.DataFrame(data, index=[0])
+    prediction = model_crop_predict.predict(input_data)
+    response = {'prediction': prediction[0]}
+
+    return jsonify(response)
+
+
+
+###################################### CROP  PREDICTION  API  ##################################    
+
 
 if __name__ == '__main__':
     app.run(debug=True)
