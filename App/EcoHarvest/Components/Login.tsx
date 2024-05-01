@@ -1,26 +1,93 @@
-import {View, Text, Pressable, StyleSheet, TextInput, KeyboardAvoidingView} from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  TextInput
+} from 'react-native';
 import React from 'react';
 
-export default function Login() {
-
+export default function Login({navigation}: {navigation: any}) {
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [showError, setShowError] = React.useState(false);
 
   return (
-    <View style = {loginStyles.loginContainer}>
+    <View style={loginStyles.loginContainer}>
       <View>
-        <Text style = {loginStyles.loginHeader}>Welcome Back To</Text>
-        <Text style = {[loginStyles.loginHeader, loginStyles.greenText]}>EcoHarvest</Text>
+        <Text style={loginStyles.loginHeader}>Welcome Back To</Text>
+        <Text style={[loginStyles.loginHeader, loginStyles.greenText]}>
+          EcoHarvest
+        </Text>
       </View>
-      <View style = {loginStyles.loginForm}>
-        <View style = {loginStyles.loginElements}>
-          <TextInput  placeholder='Enter Email' style = {loginStyles.loginInputs} keyboardType='email-address'></TextInput>
+      <View style={loginStyles.loginForm}>
+        <View style={loginStyles.loginElements}>
+          <TextInput
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            placeholder="Enter Email"
+            style={loginStyles.loginInputs}
+            keyboardType="email-address"></TextInput>
         </View>
-        <View style = {loginStyles.loginElements}>
-          <TextInput  placeholder='Enter Password' style = {loginStyles.loginInputs} secureTextEntry = {true}></TextInput>
+        <View style={loginStyles.loginElements}>
+          <TextInput
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            placeholder="Enter Password"
+            style={loginStyles.loginInputs}
+            secureTextEntry={true}></TextInput>
         </View>
-        <Pressable style = {loginStyles.loginButton}><Text style = {{alignContent: 'center', fontWeight: '600',textAlign:'center', fontSize:20, color: 'white' }}>Login</Text></Pressable>
-        <Text style = {{textAlign: 'center', fontSize: 18}}>Not an Existing User? <Text style = {loginStyles.greenText}>SignUp</Text></Text>
+        {
+          showError ? (
+            <Text style={{color: 'red', textAlign: 'center'}}>Invalid Credentials</Text>
+          ) : null
+        }
+        <Pressable
+          onPress={async() => {
+            console.log(email, password)
+            const response = await fetch('https://ecoharvest.onrender.com/api/v1/auth/login', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: email,
+                password: password,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              setShowError(false);
+              setTimeout(() => {},3000)
+              console.log(data);
+              navigation.navigate('Landing Page');
+            } else {
+              setShowError(true);
+            }
+          }}
+          style={loginStyles.loginButton}>
+          <Text
+            style={{
+              alignContent: 'center',
+              fontWeight: '600',
+              textAlign: 'center',
+              fontSize: 20,
+              color: 'white',
+            }}>
+            Login
+          </Text>
+        </Pressable>
+        <Text style={{textAlign: 'center', fontSize: 18}}>
+          Not an Existing User?{' '}
+          <Text
+            style={loginStyles.greenText}
+            onPress={() => navigation.navigate('SignUp Page')}>
+            SignUp
+          </Text>
+        </Text>
       </View>
     </View>
   );
@@ -52,7 +119,7 @@ const loginStyles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   loginInputs: {
     height: 40,
@@ -70,5 +137,5 @@ const loginStyles = StyleSheet.create({
     width: 100,
     marginLeft: 'auto',
     marginRight: 'auto',
-  }
+  },
 });

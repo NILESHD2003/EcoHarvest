@@ -1,26 +1,45 @@
-import React from "react";
-import { Text, View, SafeAreaView, StyleSheet } from "react-native";
-import Login from "./Components/Login";
-import Footer from "./Components/Footer";
-import SignUp from "./Components/SignUp";
-import OTP from "./Components/OTP";
+import React from 'react';
+import {Text, View, SafeAreaView, StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import SignUp from './Components/SignUp';
+import Login from './Components/Login';
+import OTP from './Components/OTP';
+import LandingPage from './Components/LandingPage';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  return(
-    // <View style = {styles.container}>
-    //   {/* <View><Text>Hello World</Text></View> */}
-    //   {/* <Login></Login> */}
-    //   {/* <SignUp></SignUp> */}
-    //   <OTP></OTP>
-    //   {/* <Footer></Footer> */}
-    // </View>
-    <SafeAreaView>
-      {/* <Login></Login> */}
-      {/* <SignUp></SignUp> */}
-      <OTP></OTP>
-    </SafeAreaView>
-  )
-
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          component={SignUp}
+          name="SignUp Page"></Stack.Screen>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          component={Login}
+          name="Login Page"></Stack.Screen>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          component={OTP}
+          name="OTP Page"></Stack.Screen>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          component={LandingPage}
+          name="Landing Page"></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -29,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }
+  },
 });
 
 export default App;
