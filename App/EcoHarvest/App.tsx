@@ -8,8 +8,9 @@ import Login from './Components/Login';
 import OTP from './Components/OTP';
 import LandingPage from './Components/LandingPage';
 import RNFetchBlob from 'rn-fetch-blob';
+import DeviceInfo from 'react-native-device-info';
 
-const checkForUpdate = async () => {
+const checkForUpdate = async (version: string) => {
   try {
     const url = 'https://ecoharvest.onrender.com/api/v1/application/check-update';
     const res = await fetch(url, {
@@ -18,12 +19,14 @@ const checkForUpdate = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        version: '1.0.0',
+        version: version,
         platform: 'android',
       }),
     });
     const data = await res.json();
     const {updateAvailable} = data;
+    const downloadUrl = 'https://ecoharvest.onrender.com/api/v1/application/get-app/specific/'+data.data.package_name;
+    console.log(downloadUrl)
     if (updateAvailable) {
       Alert.alert(
         'Update Available',
@@ -36,7 +39,8 @@ const checkForUpdate = async () => {
           },
           {
             text: 'OK',
-            onPress: () => downloadAndInstallAPK(),
+            // onPress: () => downloadAndInstallAPK(data.data.package_name, 'https://ecoharvest.onrender.com/api/v1/application/get-app/specific/EcoHarvest2.0.0'),
+            onPress: () => downloadAndInstallAPK(data.data.package_name, downloadUrl),
           },
         ],
         {cancelable: false},
@@ -47,10 +51,11 @@ const checkForUpdate = async () => {
   }
 };
 
-const downloadAndInstallAPK = async () => {
+const downloadAndInstallAPK = async (package_name : string, url2 : string) => {
+  console.log(package_name)
   const url = 'https://ecoharvest.onrender.com/api/v1/application/get-app';
-  console.log('Download URL:-', url);
-  const filePath = `${RNFetchBlob.fs.dirs.DownloadDir}/update.apk`;
+  console.log('Download URL:-', url2);
+  const filePath = `${RNFetchBlob.fs.dirs.DownloadDir}/updateCurrNew.apk`;
   console.log('File Path:-', filePath);
 
   try {
@@ -77,7 +82,8 @@ const downloadAndInstallAPK = async () => {
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  checkForUpdate();
+  const version = DeviceInfo.getVersion();
+  checkForUpdate(version);
   // downloadAndInstallAPK();
   return (
     <NavigationContainer>

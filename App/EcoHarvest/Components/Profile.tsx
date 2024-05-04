@@ -10,14 +10,18 @@ import {
 } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
 
 export default function Profile({navigation}: {navigation: any}) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [appVersion, setAppVersion] = React.useState('1.0.0');
   const getData = async () => {
     try {
       const param1 = await AsyncStorage.getItem('name');
       const param2 = await AsyncStorage.getItem('email');
+      const param3 = DeviceInfo.getVersion();
+      setAppVersion(param3 || '1.0.0');
       setName(param1 || '');
       setEmail(param2 || '');
     } catch (e) {
@@ -25,7 +29,6 @@ export default function Profile({navigation}: {navigation: any}) {
     }
   };
   getData();
-  console.log(name, email)
   return (
     <SafeAreaView style={{flex: 1, padding: 20}}>
       <View style={[{flex: 0.2}, profileStyles.headerBox]}>
@@ -81,7 +84,7 @@ export default function Profile({navigation}: {navigation: any}) {
       </View>
       <View style={[profileStyles.creditSection, {flex: 0.2}]}>
         <Text style={[profileStyles.textCenter, profileStyles.text16]}>
-          Version <Text style={[profileStyles.greenText]}>2.0.0</Text>
+          Version <Text style={[profileStyles.greenText]}>{appVersion}</Text>
         </Text>
         <Text style={[profileStyles.textCenter, profileStyles.text16]}>
           Copyright 2024 &copy;{' '}

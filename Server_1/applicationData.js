@@ -11,6 +11,12 @@ const data = [
         desc: 'Added Auto App update feature',
         package_name: 'EcoHarvest2.0.0.apk',
     },
+    {
+        version: '2.0.1',
+        platform: 'android',
+        desc: 'Fixed sign in issue',
+        package_name: 'EcoHarvest2.0.1.apk',
+    }
 ];
 
 module.exports = data;
