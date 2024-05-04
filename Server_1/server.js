@@ -1,3 +1,4 @@
+const data = require('./applicationData.js');
 const express = require("express");
 const app = express();
 const database = require("./Config/database");
@@ -41,33 +42,32 @@ app.get("/", (req, res) => {
     });
 });
 
-// app.get("/api/v1/application/get-app/:package" ,async (req, res) => {
-//     try{
-//         const { package_name } = req.body;
-//         const reqPackage = req.params['package'];
-//         const filePath = `./Resources/${reqPackage}`;
+app.get("/api/v1/application/get-app/specific/:package" ,async (req, res) => {
+    try{
+        const reqPackage = req.params['package'];
+        const filePath = `./Resources/${reqPackage}`;
         
-//         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
-//         res.setHeader('Content-Length', fs.statSync(filePath).size);
+        res.setHeader('Content-Type', 'application/vnd.android.package-archive');
+        res.setHeader('Content-Length', fs.statSync(filePath).size);
       
-//         // Stream the APK file to the client.
-//         const readStream = fs.createReadStream(filePath);
-//         readStream.pipe(res);
-//     }catch(e){
-//         console.error(e);
+        // Stream the APK file to the client.
+        const readStream = fs.createReadStream(filePath);
+        readStream.pipe(res);
+    }catch(e){
+        console.error(e);
 
-//         return res.status(500).json({
-//             success: false,
-//             message: "Unable to get the apk. Please try again."
-//         })
-//     }
-// })
+        return res.status(500).json({
+            success: false,
+            message: "Unable to get the apk. Please try again."
+        })
+    }
+})
 
 app.get("/api/v1/application/get-app" ,async (req, res) => {
     try{
-        const { package_name } = req.body;
-        const filePath = `./Resources/EcoHarvest2.0.0.apk`;
-        
+        const latestVersion = data[data.length - 1];
+        const filePath = `./Resources/${latestVersion.package_name}`;
+
         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
         res.setHeader('Content-Length', fs.statSync(filePath).size);
       
