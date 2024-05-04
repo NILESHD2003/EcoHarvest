@@ -11,7 +11,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 const checkForUpdate = async () => {
   try {
-    const url = 'http://10.0.2.2:8000/api/v1/application/check-update';
+    const url = 'https://ecoharvest.onrender.com/api/v1/application/check-update';
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -48,7 +48,7 @@ const checkForUpdate = async () => {
 };
 
 const downloadAndInstallAPK = async () => {
-  const url = 'http://10.0.2.2:8000/api/v1/application/get-app';
+  const url = 'https://ecoharvest.onrender.com/api/v1/application/get-app';
   console.log('Download URL:-', url);
   const filePath = `${RNFetchBlob.fs.dirs.DownloadDir}/update.apk`;
   console.log('File Path:-', filePath);

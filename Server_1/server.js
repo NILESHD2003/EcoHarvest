@@ -8,8 +8,8 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 const fs = require("fs");
 
-// dotenv.config();
-// database.connect();
+dotenv.config();
+database.connect();
 
 // Middlewares
 app.use(express.json());

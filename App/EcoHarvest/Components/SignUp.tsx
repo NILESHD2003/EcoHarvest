@@ -1,37 +1,47 @@
-import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignUp({navigation}: {navigation: any}) {
-
-  const[name, setName] = React.useState('');
-  const[email, setEmail] = React.useState('');
-  const[password, setPassword] = React.useState('');
-  const[confirmPassword, setConfirmPassword] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
 
   return (
-    <View style={signupStyles.signupContainer}>
+    <ScrollView  contentContainerStyle = {{alignItems: 'center', gap: 90}} style={signupStyles.signupContainer} keyboardDismissMode='on-drag'>
       <View>
         <Text style={signupStyles.signupHeader}>Welcome To</Text>
         <Text style={[signupStyles.signupHeader, signupStyles.greenText]}>
           EcoHarvest
         </Text>
       </View>
-      <View style={signupStyles.signupForm}>
+      <View
+        style={signupStyles.signupForm}>
         <Text
           style={[signupStyles.greenText, {fontSize: 28, fontWeight: '400'}]}>
           Register
         </Text>
         <View style={signupStyles.signupElements}>
           <TextInput
-            onChangeText={(text) => setName(text)}
+            onChangeText={text => setName(text)}
             value={name}
             placeholder="Enter Name"
             style={signupStyles.signupInputs}></TextInput>
         </View>
         <View style={signupStyles.signupElements}>
           <TextInput
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={text => setEmail(text)}
             value={email}
             keyboardType="email-address"
             placeholder="Enter Email"
@@ -39,7 +49,7 @@ export default function SignUp({navigation}: {navigation: any}) {
         </View>
         <View style={signupStyles.signupElements}>
           <TextInput
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={text => setPassword(text)}
             value={password}
             secureTextEntry={true}
             placeholder="Enter Password"
@@ -47,40 +57,43 @@ export default function SignUp({navigation}: {navigation: any}) {
         </View>
         <View style={signupStyles.signupElements}>
           <TextInput
-            onChangeText={(text) => setConfirmPassword(text)}
+            onChangeText={text => setConfirmPassword(text)}
             value={confirmPassword}
             secureTextEntry={true}
             placeholder="Confirm Password"
             style={signupStyles.signupInputs}></TextInput>
         </View>
         <Pressable
-          onPress={async() => {
+          onPress={async () => {
             AsyncStorage.setItem('name', name);
             AsyncStorage.setItem('email', email);
             AsyncStorage.setItem('password', password);
             AsyncStorage.setItem('confirmPassword', confirmPassword);
 
-            const response = await fetch('https://ecoharvest.onrender.com/api/v1/auth/send-otp', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
+            const response = await fetch(
+              'https://ecoharvest.onrender.com/api/v1/auth/send-otp',
+              {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: email,
+                }),
               },
-              body: JSON.stringify({
-                email: email
-              }),
-            });
+            );
 
             const data = await response.json();
 
-            console.log(data)
+            console.log(data);
 
             const {success, message} = data;
 
             if (success) {
-              navigation.navigate('OTP Page')
+              navigation.navigate('OTP Page');
             } else {
-              Alert.alert(message)
+              Alert.alert(message);
             }
           }}
           style={signupStyles.signupButton}>
@@ -104,7 +117,7 @@ export default function SignUp({navigation}: {navigation: any}) {
           </Text>
         </Text>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -115,7 +128,7 @@ const signupStyles = StyleSheet.create({
   signupContainer: {
     // justifyContent: 'space-around',
     paddingTop: 120,
-    alignItems: 'center',
+    // alignItems: 'center',
     width: '100%',
     height: '100%',
     gap: 120,
