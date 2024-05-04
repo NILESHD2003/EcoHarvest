@@ -16,38 +16,74 @@ export default function FeatureContainer({navigation}: {navigation: any}) {
           EcoHarvest
         </Text>
       </View>
-      <View style={homeStyles.carosuel}>
-        <Text>Here goes images carosuel</Text>
-      </View>
       <View style={homeStyles.featureSection}>
-        <Text style={homeStyles.featureHeader}>
-          Our <Text style={homeStyles.greenText}>Features</Text>
-        </Text>
         <ScrollView>
-          <Pressable onPress={()=>{navigation.navigate('Image Page')}}>
+          <View style={homeStyles.carosuel}>
+            <Text>Here goes images carosuel</Text>
+          </View>
+          <View style = {homeStyles.featureSectionInnerBox}>
+          <Text style={homeStyles.featureHeader}>
+            Our <Text style={homeStyles.greenText}>Features</Text>
+          </Text>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Plant Disease Prediction Page');
+            }}>
             <View style={homeStyles.featureBox}>
-              <Text style={homeStyles.featureTitle}>Plant Disease Prediction</Text>
-              <Text style={homeStyles.featureDesc}>props.description</Text>
+              <Text style={homeStyles.featureTitle}>
+                Plant Disease Prediction
+              </Text>
+              <Text style={homeStyles.featureDesc}>Predict plant diseases to protect your crops</Text>
             </View>
           </Pressable>
-          <Pressable onPress={()=>{navigation.navigate('Form Page')}}>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Fertiliser Prediction Page');
+            }}>
             <View style={homeStyles.featureBox}>
               <Text style={homeStyles.featureTitle}>Fertiliser Prediction</Text>
-              <Text style={homeStyles.featureDesc}>props.description</Text>
+              <Text style={homeStyles.featureDesc}>Choose fertilizers wisely for better harvests</Text>
             </View>
           </Pressable>
-          <Pressable onPress={()=>{navigation.navigate('Form Page')}}>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Crop Prediction Page');
+            }}>
             <View style={homeStyles.featureBox}>
               <Text style={homeStyles.featureTitle}>Crop Prediction</Text>
-              <Text style={homeStyles.featureDesc}>props.description</Text>
+              <Text style={homeStyles.featureDesc}>Know which crops will thrive in your soil</Text>
             </View>
           </Pressable>
-          <Pressable onPress={()=>{navigation.navigate('Form Page')}}>
+          <Text style={homeStyles.featureHeader}>
+            Our <Text style={homeStyles.greenText}>Upcoming Features</Text>
+          </Text>
+          <Pressable>
             <View style={homeStyles.featureBox}>
               <Text style={homeStyles.featureTitle}>Yeild Prediction</Text>
               <Text style={homeStyles.featureDesc}>props.description</Text>
             </View>
           </Pressable>
+          <Pressable>
+            <View style={homeStyles.featureBox}>
+              <Text style={homeStyles.featureTitle}>Grading n Sorting</Text>
+              <Text style={homeStyles.featureDesc}>Grade and sort produce efficiently</Text>
+            </View>
+          </Pressable>
+          <Pressable>
+            <View style={homeStyles.featureBox}>
+              <Text style={homeStyles.featureTitle}>
+                Real Time Soil and Climate Monitor
+              </Text>
+              <Text style={homeStyles.featureDesc}>Monitor soil and climate conditions in real-time</Text>
+            </View>
+          </Pressable>
+          <Pressable>
+            <View style={homeStyles.featureBox}>
+              <Text style={homeStyles.featureTitle}>Smart Farmer</Text>
+              <Text style={homeStyles.featureDesc}>Get smart farming advice from AI assistant.</Text>
+            </View>
+          </Pressable>
+          </View>
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -58,8 +94,6 @@ const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   greenText: {
     color: '#80E618',
@@ -93,8 +127,10 @@ const homeStyles = StyleSheet.create({
   featureDesc: {
     fontSize: 12,
   },
-  featureSection: {
-    flex: 1,
+  featureSection:{
+    flex: 1
+  },
+  featureSectionInnerBox: {
     marginLeft: 18,
     marginTop: 18,
     marginRight: 18,

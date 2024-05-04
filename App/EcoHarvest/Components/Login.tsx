@@ -6,6 +6,7 @@ import {
   TextInput
 } from 'react-native';
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}: {navigation: any}) {
   const [password, setPassword] = React.useState('');
@@ -62,7 +63,14 @@ export default function Login({navigation}: {navigation: any}) {
             if (data.success) {
               setShowError(false);
               setTimeout(() => {},3000)
-              console.log(data);
+              console.log(data.user);
+              const {name, email, token} = data.user;
+              
+              AsyncStorage.setItem('name', name);
+              AsyncStorage.setItem('email', email);
+              AsyncStorage.setItem('token', token);
+              AsyncStorage.setItem('isLoggedIn', 'true');
+              
               navigation.navigate('Landing Page');
             } else {
               setShowError(true);

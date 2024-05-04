@@ -11,8 +11,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import FeatureContainer from './FeatureContainer';
-import ImageInputPage from './ImageInputPage';
-import FormInputPage from './FormInputPage';
+import PlantDiseasePredictionPage from './PlantDiseasePredictionPage';
+import FertiliserPredictionPage from './FertiliserPredictionPage';
+import CropPredictionPage from './CropPredictionPage';
 
 const Stack2 = createNativeStackNavigator();
 
@@ -30,14 +31,20 @@ export default function Home({navigation}: {navigation: any}) {
           options={{
             headerShown: false,
           }}
-          name="Image Page"
-          component={ImageInputPage}></Stack2.Screen>
+          name="Plant Disease Prediction Page"
+          component={PlantDiseasePredictionPage}></Stack2.Screen>
         <Stack2.Screen
           options={{
             headerShown: false,
           }}
-          name="Form Page"
-          component={FormInputPage}></Stack2.Screen>
+          name="Fertiliser Prediction Page"
+          component={FertiliserPredictionPage}></Stack2.Screen>
+          <Stack2.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="Crop Prediction Page"
+          component={CropPredictionPage}></Stack2.Screen>
       </Stack2.Navigator>
     </NavigationContainer>
   );

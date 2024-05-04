@@ -1,7 +1,14 @@
-import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignUp({navigation}: {navigation: any}) {
+
+  const[name, setName] = React.useState('');
+  const[email, setEmail] = React.useState('');
+  const[password, setPassword] = React.useState('');
+  const[confirmPassword, setConfirmPassword] = React.useState('');
+
   return (
     <View style={signupStyles.signupContainer}>
       <View>
@@ -12,34 +19,70 @@ export default function SignUp({navigation}: {navigation: any}) {
       </View>
       <View style={signupStyles.signupForm}>
         <Text
-          style={[signupStyles.greenText, {fontSize: 24, fontWeight: '600'}]}>
+          style={[signupStyles.greenText, {fontSize: 28, fontWeight: '400'}]}>
           Register
         </Text>
         <View style={signupStyles.signupElements}>
           <TextInput
+            onChangeText={(text) => setName(text)}
+            value={name}
             placeholder="Enter Name"
             style={signupStyles.signupInputs}></TextInput>
         </View>
         <View style={signupStyles.signupElements}>
           <TextInput
+            onChangeText={(text) => setEmail(text)}
+            value={email}
             keyboardType="email-address"
             placeholder="Enter Email"
             style={signupStyles.signupInputs}></TextInput>
         </View>
         <View style={signupStyles.signupElements}>
           <TextInput
+            onChangeText={(text) => setPassword(text)}
+            value={password}
             secureTextEntry={true}
             placeholder="Enter Password"
             style={signupStyles.signupInputs}></TextInput>
         </View>
         <View style={signupStyles.signupElements}>
           <TextInput
+            onChangeText={(text) => setConfirmPassword(text)}
+            value={confirmPassword}
             secureTextEntry={true}
             placeholder="Confirm Password"
             style={signupStyles.signupInputs}></TextInput>
         </View>
         <Pressable
-          onPress={() => navigation.navigate('OTP Page')}
+          onPress={async() => {
+            AsyncStorage.setItem('name', name);
+            AsyncStorage.setItem('email', email);
+            AsyncStorage.setItem('password', password);
+            AsyncStorage.setItem('confirmPassword', confirmPassword);
+
+            const response = await fetch('https://ecoharvest.onrender.com/api/v1/auth/send-otp', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: email
+              }),
+            });
+
+            const data = await response.json();
+
+            console.log(data)
+
+            const {success, message} = data;
+
+            if (success) {
+              navigation.navigate('OTP Page')
+            } else {
+              Alert.alert(message)
+            }
+          }}
           style={signupStyles.signupButton}>
           <Text
             style={{

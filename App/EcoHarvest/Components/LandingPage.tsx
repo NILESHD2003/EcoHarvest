@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 
 export default function LandingPage() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName='Home'>
       <Tab.Screen
         options={{
           headerShown: false,

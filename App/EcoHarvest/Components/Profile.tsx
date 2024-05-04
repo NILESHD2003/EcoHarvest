@@ -9,31 +9,45 @@ import {
   Pressable,
 } from 'react-native';
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profile({navigation}: {navigation: any}) {
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const getData = async () => {
+    try {
+      const param1 = await AsyncStorage.getItem('name');
+      const param2 = await AsyncStorage.getItem('email');
+      setName(param1 || '');
+      setEmail(param2 || '');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  getData();
+  console.log(name, email)
   return (
     <SafeAreaView style={{flex: 1, padding: 20}}>
       <View style={[{flex: 0.2}, profileStyles.headerBox]}>
-        {/* <Image
-          style={profileStyles.backLogo}
-          source={require('./Assets/back-arrow.png')}></Image> */}
         <Text style={profileStyles.header}>Profile</Text>
       </View>
       <View style={{flex: 0.6}}>
-        {/* Image goes here */}
-        <View style = {profileStyles.profile}>
-          <View
+        <View style={profileStyles.profile}>
+          <Image source={require('./Assets/avatar.png')}></Image>
+          <Text style={{color: 'black', fontSize: 20}}>{name}</Text>
+          <Text
             style={{
-              backgroundColor: 'grey',
-              height: 150,
-              width: 150,
-              borderRadius: 75,
-            }}></View>
-          <Text>Name</Text>
-          <Text>Email</Text>
+              color: 'black',
+              fontSize: 16,
+              marginTop: -10,
+              marginBottom: 40,
+            }}>
+            {email}
+          </Text>
         </View>
         <Pressable
           onPress={() => {
+            AsyncStorage.setItem('isLoggedIn', 'false');
             navigation.navigate('Login Page');
           }}>
           <View
@@ -67,15 +81,14 @@ export default function Profile({navigation}: {navigation: any}) {
       </View>
       <View style={[profileStyles.creditSection, {flex: 0.2}]}>
         <Text style={[profileStyles.textCenter, profileStyles.text16]}>
-          Version <Text style={[profileStyles.greenText]}>1.0.0</Text>
+          Version <Text style={[profileStyles.greenText]}>2.0.0</Text>
         </Text>
-        {/* <Text style={[profileStyles.textCenter, profileStyles.text16]}>
-          Developed by{' '}
-          <Text style={[profileStyles.greenText]}>Nilesh Deshpande</Text>
-        </Text> */}
         <Text style={[profileStyles.textCenter, profileStyles.text16]}>
-          Project by{' '}
+          Copyright 2024 &copy;{' '}
           <Text style={[profileStyles.greenText]}>Team INTELLECTS</Text>
+        </Text>
+        <Text style={[profileStyles.textCenter, profileStyles.text16]}>
+          Developed by <Text style={[profileStyles.greenText]}>Nilesh</Text>
         </Text>
       </View>
     </SafeAreaView>
@@ -115,5 +128,5 @@ const profileStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 20,
-  }
+  },
 });
