@@ -41,11 +41,32 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/api/v1/application/get-app/:package" ,async (req, res) => {
+// app.get("/api/v1/application/get-app/:package" ,async (req, res) => {
+//     try{
+//         const { package_name } = req.body;
+//         const reqPackage = req.params['package'];
+//         const filePath = `./Resources/${reqPackage}`;
+        
+//         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
+//         res.setHeader('Content-Length', fs.statSync(filePath).size);
+      
+//         // Stream the APK file to the client.
+//         const readStream = fs.createReadStream(filePath);
+//         readStream.pipe(res);
+//     }catch(e){
+//         console.error(e);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Unable to get the apk. Please try again."
+//         })
+//     }
+// })
+
+app.get("/api/v1/application/get-app" ,async (req, res) => {
     try{
         const { package_name } = req.body;
-        const reqPackage = req.params['package'];
-        const filePath = `./Resources/${reqPackage}`;
+        const filePath = `./Resources/EcoHarvest2.0.0.apk`;
         
         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
         res.setHeader('Content-Length', fs.statSync(filePath).size);
