@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
 app.get("/api/v1/application/get-app" ,async (req, res) => {
     try{
         const { package_name } = req.body;
-        const filePath = `./Resources/EcoHarvest1.0.0.apk`;
+        const filePath = `./Resources/EcoHarvest2.0.0.apk`;
         
         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
         res.setHeader('Content-Length', fs.statSync(filePath).size);
