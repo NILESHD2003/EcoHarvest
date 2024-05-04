@@ -16,6 +16,12 @@ const data = [
         platform: 'android',
         desc: 'Fixed sign in issue',
         package_name: 'EcoHarvest2.0.1.apk',
+    },
+    {
+        version: '2.1.0',
+        platform: 'android',
+        desc: 'Added Modal to display update information',
+        package_name: 'EcoHarvest2.1.0.apk', 
     }
 ];
 

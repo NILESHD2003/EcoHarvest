@@ -19,7 +19,7 @@ const checkForUpdate = async (version: string) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        version: version,
+        version: '1.0.0',
         platform: 'android',
       }),
     });
@@ -30,7 +30,7 @@ const checkForUpdate = async (version: string) => {
     if (updateAvailable) {
       Alert.alert(
         'Update Available',
-        'An update is available for the app. Do you want to download and install it?',
+        `An update is available for the app. Do you want to download and install it? \n\nWhat's New\n\n${data.data.desc}`,
         [
           {
             text: 'Cancel',
