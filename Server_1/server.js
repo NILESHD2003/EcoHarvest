@@ -8,8 +8,8 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 const fs = require("fs");
 
-dotenv.config();
-database.connect();
+// dotenv.config();
+// database.connect();
 
 // Middlewares
 app.use(express.json());
@@ -41,10 +41,11 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/api/v1/application/get-app" ,async (req, res) => {
+app.get("/api/v1/application/get-app/:package" ,async (req, res) => {
     try{
         const { package_name } = req.body;
-        const filePath = `./Resources/EcoHarvest2.0.0.apk`;
+        const reqPackage = req.params['package'];
+        const filePath = `./Resources/${reqPackage}`;
         
         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
         res.setHeader('Content-Length', fs.statSync(filePath).size);
