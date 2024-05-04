@@ -22,6 +22,12 @@ const data = [
         platform: 'android',
         desc: 'Added Modal to display update information',
         package_name: 'EcoHarvest2.1.0.apk', 
+    },
+    {
+        version: '2.1.1',
+        platform: 'android',
+        desc: 'Fixed Auto updation issue',
+        package_name: 'EcoHarvest2.1.1.apk', 
     }
 ];
 

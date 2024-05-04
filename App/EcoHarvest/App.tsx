@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, SafeAreaView, StyleSheet, Alert} from 'react-native';
+import {StyleSheet, Alert} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from './Components/SplashScreen';
@@ -19,7 +19,7 @@ const checkForUpdate = async (version: string) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        version: '1.0.0',
+        version: version,
         platform: 'android',
       }),
     });
@@ -29,8 +29,8 @@ const checkForUpdate = async (version: string) => {
     console.log(downloadUrl)
     if (updateAvailable) {
       Alert.alert(
-        'Update Available',
-        `An update is available for the app. Do you want to download and install it? \n\nWhat's New\n\n${data.data.desc}`,
+        `${data.data.version} Update Available`,
+        `An update is available for the app. Do you want to download and install it? \n\nWhat's New\n${data.data.desc}`,
         [
           {
             text: 'Cancel',
@@ -55,7 +55,7 @@ const downloadAndInstallAPK = async (package_name : string, url2 : string) => {
   console.log(package_name)
   const url = 'https://ecoharvest.onrender.com/api/v1/application/get-app';
   console.log('Download URL:-', url2);
-  const filePath = `${RNFetchBlob.fs.dirs.DownloadDir}/updateCurrNew.apk`;
+  const filePath = `${RNFetchBlob.fs.dirs.DownloadDir}/${package_name}`;
   console.log('File Path:-', filePath);
 
   try {
@@ -84,7 +84,6 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   const version = DeviceInfo.getVersion();
   checkForUpdate(version);
-  // downloadAndInstallAPK();
   return (
     <NavigationContainer>
       <Stack.Navigator>
