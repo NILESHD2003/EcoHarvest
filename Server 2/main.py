@@ -80,7 +80,7 @@ with open('fertilizer_prediction.pkl','rb') as f1:
 with open('encoded_categories.json', 'r') as f_category:
     encoded_categories = json.load(f_category)
 
-@app.route('/predict_fertilizer', methods=['POST'])
+@app.route('/predict/fertilizer', methods=['POST'])
 def predict():
     data = request.get_json()
 
@@ -116,7 +116,7 @@ def predict():
 with open('crop_prediction.pkl','rb') as f2:
     model_crop_predict=pickle.load(f2)
 ###################################### CROP  PREDICTION  API  ##################################    
-@app.route('/predict_crop', methods=['POST'])
+@app.route('/predict1/crop', methods=['POST'])
 def predict():
     data = request.get_json()
     input_data = pd.DataFrame(data, index=[0])
