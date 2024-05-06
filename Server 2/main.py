@@ -56,7 +56,7 @@ def predict_disease(image_file):
     return predicted_class
 
 @app.route('/detect/plantdisease', methods=['POST'])
-def predict():
+def predict_plantdisease():
     try:
         if 'image' not in request.files:
             return jsonify({'error': 'No image provided'}), 400
@@ -72,7 +72,7 @@ def predict():
 
 ###################################### FERTILIZER  PREDICTION  pickle  ################################## 
 #Load the trained model
-with open('fertilizer_predicton.pkl','rb') as f1:
+with open('fertilizer_prediction.pkl','rb') as f1:
     model_fertilizer_predict=pickle.load(f1)
 
 ###################################### FERTILIZER  PREDICTION  API  ##################################
@@ -81,7 +81,7 @@ with open('encoded_categories.json', 'r') as f_category:
     encoded_categories = json.load(f_category)
 
 @app.route('/predict/fertilizer', methods=['POST'])
-def predict():
+def predict_fertilizer():
     data = request.get_json()
 
     temperature = data['Temperature']
@@ -117,7 +117,7 @@ with open('crop_prediction.pkl','rb') as f2:
     model_crop_predict=pickle.load(f2)
 ###################################### CROP  PREDICTION  API  ##################################    
 @app.route('/predict/crop', methods=['POST'])
-def predict():
+def predict_crop():
     data = request.get_json()
     input_data = pd.DataFrame(data, index=[0])
     prediction = model_crop_predict.predict(input_data)
