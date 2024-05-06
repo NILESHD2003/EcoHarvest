@@ -2,7 +2,6 @@ import {
   Dimensions,
   FlatList,
   Image,
-  ImageBackground,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -10,36 +9,47 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const { width } = Dimensions.get('window');
 
-const Carousel = ({ images }: { images: any[] }) => {
+const Carousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [images]);
 
-  const renderItem = ({ item }: { item: any }) => (
-    <ImageBackground source={item} style={styles.image} />
+  useEffect(() => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToIndex({
+        animated: true,
+        index: currentIndex,
+      });
+    }
+  }, [currentIndex]);
+
+  const renderItem = ({ item }) => (
+    <Image source={item} style={styles.image} />
   );
 
   return (
     <View style={styles.container}>
       <FlatList
+        ref={flatListRef}
         data={images}
         renderItem={renderItem}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => index.toString()}
         onMomentumScrollEnd={(event) => {
           const newIndex = Math.floor(
             event.nativeEvent.contentOffset.x / width
@@ -62,6 +72,7 @@ const Carousel = ({ images }: { images: any[] }) => {
   );
 };
 
+
 export default function FeatureContainer({navigation}: {navigation: any}) {
   const images = [
     require('./Assets/sliding1.jpg'),
@@ -77,7 +88,7 @@ export default function FeatureContainer({navigation}: {navigation: any}) {
       </View>
       <View style={homeStyles.featureSection}>
         <ScrollView>
-          <View style={homeStyles.carosuel}>
+          <View>
             <Carousel images={images}></Carousel>
           </View>
           <View style = {homeStyles.featureSectionInnerBox}>
@@ -163,11 +174,6 @@ const homeStyles = StyleSheet.create({
     marginTop: 18,
     marginBottom: 18,
     // textAlign: 'center',
-  },
-  carosuel: {
-    maxHeight: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   featureHeader: {
     fontSize: 24,
