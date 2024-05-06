@@ -28,6 +28,12 @@ const data = [
         platform: 'android',
         desc: 'Fixed Auto updation issue',
         package_name: 'EcoHarvest2.1.1.apk', 
+    },
+    {
+        version: '2.1.2',
+        platform: 'android',
+        desc: 'Added haptic feedbaacks and Carousel',
+        package_name: 'EcoHarvest2.1.2.apk',
     }
 ];
 

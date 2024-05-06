@@ -9,6 +9,7 @@ import OTP from './Components/OTP';
 import LandingPage from './Components/LandingPage';
 import RNFetchBlob from 'rn-fetch-blob';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const checkForUpdate = async (version: string) => {
   try {
@@ -79,9 +80,30 @@ const downloadAndInstallAPK = async (package_name : string, url2 : string) => {
   }
 };
 
+const connect = async () => {
+  try {
+    const isLogged = await AsyncStorage.getItem('isLogged');
+    if (isLogged === 'true') {
+      return;
+    }
+    const url = 'https://ecoharvest.onrender.com/';
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+  } catch (e) {
+    console.log('Error:-', e);
+  }
+};
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  connect();
   const version = DeviceInfo.getVersion();
   checkForUpdate(version);
   return (

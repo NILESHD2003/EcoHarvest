@@ -3,7 +3,8 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  TextInput
+  TextInput,
+  Vibration
 } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,6 +46,8 @@ export default function Login({navigation}: {navigation: any}) {
         }
         <Pressable
           onPress={async() => {
+            Vibration.vibrate(1000);
+
             console.log(email, password)
             const response = await fetch('https://ecoharvest.onrender.com/api/v1/auth/login', {
               method: 'POST',

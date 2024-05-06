@@ -51,6 +51,8 @@ export default function Profile({navigation}: {navigation: any}) {
         <Pressable
           onPress={() => {
             AsyncStorage.setItem('isLoggedIn', 'false');
+            AsyncStorage.removeItem('name');
+            AsyncStorage.removeItem('email');
             navigation.navigate('Login Page');
           }}>
           <View

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Pressable, Vibration} from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -64,6 +64,8 @@ export default function OTP({navigation}: {navigation: any}) {
       </View>
       <Pressable
         onPress={async () => {
+          Vibration.vibrate(1000);
+          
           const otp = digit1 + digit2 + digit3 + digit4;
           console.log(otp);
 

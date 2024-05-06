@@ -1,15 +1,14 @@
 import {
   Alert,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
+  Vibration
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignUp({navigation}: {navigation: any}) {
@@ -17,6 +16,8 @@ export default function SignUp({navigation}: {navigation: any}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [loadingStyle, setLoadingStyle] = React.useState({});
 
   return (
     <ScrollView  contentContainerStyle = {{alignItems: 'center', gap: 90}} style={signupStyles.signupContainer} keyboardDismissMode='on-drag'>
@@ -26,8 +27,13 @@ export default function SignUp({navigation}: {navigation: any}) {
           EcoHarvest
         </Text>
       </View>
+      {
+        loading ? (
+          <View style = {signupStyles.loadingModal}><Text style={{fontSize: 20}}>Please Wait...</Text><Text style={{fontSize: 20}}>While we Register you</Text></View>
+        ) : null
+      }
       <View
-        style={signupStyles.signupForm}>
+        style={[signupStyles.signupForm, loadingStyle]}>
         <Text
           style={[signupStyles.greenText, {fontSize: 28, fontWeight: '400'}]}>
           Register
@@ -65,10 +71,15 @@ export default function SignUp({navigation}: {navigation: any}) {
         </View>
         <Pressable
           onPress={async () => {
+            Vibration.vibrate(1000);
+
             AsyncStorage.setItem('name', name);
             AsyncStorage.setItem('email', email);
             AsyncStorage.setItem('password', password);
             AsyncStorage.setItem('confirmPassword', confirmPassword);
+
+            setLoading(true);
+            setLoadingStyle({opacity: 0});
 
             const response = await fetch(
               'https://ecoharvest.onrender.com/api/v1/auth/send-otp',
@@ -84,6 +95,9 @@ export default function SignUp({navigation}: {navigation: any}) {
               },
             );
 
+            setLoading(false);
+            setLoadingStyle({opacity: 1});
+
             const data = await response.json();
 
             console.log(data);
@@ -93,6 +107,7 @@ export default function SignUp({navigation}: {navigation: any}) {
             if (success) {
               navigation.navigate('OTP Page');
             } else {
+              console.log(message)
               Alert.alert(message);
             }
           }}
@@ -126,9 +141,7 @@ const signupStyles = StyleSheet.create({
     color: '#80E618',
   },
   signupContainer: {
-    // justifyContent: 'space-around',
     paddingTop: 120,
-    // alignItems: 'center',
     width: '100%',
     height: '100%',
     gap: 120,
@@ -166,4 +179,22 @@ const signupStyles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
+  loadingModal: {
+    position: 'absolute',
+    top: '40%',
+    // left: '50%',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderBlockColor: 'black',  
+    width: '80%',
+    height: '40%',
+    backgroundColor: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

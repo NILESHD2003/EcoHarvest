@@ -1,4 +1,8 @@
 import {
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -6,9 +10,64 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+const { width } = Dimensions.get('window');
+
+const Carousel = ({ images }: { images: any[] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const renderItem = ({ item }: { item: any }) => (
+    <ImageBackground source={item} style={styles.image} />
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={images}
+        renderItem={renderItem}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => index.toString()}
+        onMomentumScrollEnd={(event) => {
+          const newIndex = Math.floor(
+            event.nativeEvent.contentOffset.x / width
+          );
+          setCurrentIndex(newIndex);
+        }}
+      />
+      <View style={styles.pagination}>
+        {images.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.paginationDot,
+              index === currentIndex && styles.paginationDotActive,
+            ]}
+          />
+        ))}
+      </View>
+    </View>
+  );
+};
 
 export default function FeatureContainer({navigation}: {navigation: any}) {
+  const images = [
+    require('./Assets/sliding1.jpg'),
+    require('./Assets/sliding2.jpg'),
+    require('./Assets/sliding3.jpg')
+  ]
   return (
     <SafeAreaView style={homeStyles.container}>
       <View>
@@ -19,7 +78,7 @@ export default function FeatureContainer({navigation}: {navigation: any}) {
       <View style={homeStyles.featureSection}>
         <ScrollView>
           <View style={homeStyles.carosuel}>
-            <Text>Here goes images carosuel</Text>
+            <Carousel images={images}></Carousel>
           </View>
           <View style = {homeStyles.featureSectionInnerBox}>
           <Text style={homeStyles.featureHeader}>
@@ -106,8 +165,7 @@ const homeStyles = StyleSheet.create({
     // textAlign: 'center',
   },
   carosuel: {
-    height: 200,
-    backgroundColor: 'lightgrey',
+    maxHeight: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -134,5 +192,33 @@ const homeStyles = StyleSheet.create({
     marginLeft: 18,
     marginTop: 18,
     marginRight: 18,
+  },
+});
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    width,
+    height: 200,
+    resizeMode: 'cover',
+  },
+  pagination: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 10,
+    alignSelf: 'center',
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'gray',
+    margin: 5,
+  },
+  paginationDotActive: {
+    backgroundColor: 'blue',
   },
 });
