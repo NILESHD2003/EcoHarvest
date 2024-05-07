@@ -7,6 +7,7 @@ import {
   View,
   Image,
   Pressable,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -50,10 +51,22 @@ export default function Profile({navigation}: {navigation: any}) {
         </View>
         <Pressable
           onPress={() => {
-            AsyncStorage.setItem('isLoggedIn', 'false');
-            AsyncStorage.removeItem('name');
-            AsyncStorage.removeItem('email');
-            navigation.navigate('Login Page');
+            Alert.alert('Log Out', 'Are you sure you want to log out?', [
+              {
+                text: 'No',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'Yes',
+                onPress: () => {
+                  AsyncStorage.setItem('isLoggedIn', 'false');
+                  AsyncStorage.removeItem('name');
+                  AsyncStorage.removeItem('email');
+                  navigation.navigate('Login Page');
+                },
+              },
+            ]);
           }}>
           <View
             style={{

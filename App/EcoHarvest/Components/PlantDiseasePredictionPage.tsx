@@ -1,4 +1,7 @@
 import {
+  Alert,
+  Button,
+  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -7,54 +10,89 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 export default function PlantDiseasePredictionPage() {
   const [isImageUploaded, setIsImageUploaded] = React.useState(false);
+  const [imageSource, setImageSource] = React.useState<string>('');
+  const [predictedDisease, setPredictedDisease] = React.useState('');
+  const [isPredicted, setIsPredicted] = React.useState(false);
+
+  const selectImage = () => {
+    launchImageLibrary({mediaType: 'photo'}, response => {
+      if (
+        !response.didCancel &&
+        !response.errorCode &&
+        response.assets &&
+        response.assets[0].uri
+      ) {
+        setIsImageUploaded(true);
+        console.log(response.assets[0].uri);
+        setImageSource(response.assets[0].uri);
+        console.log(imageSource);
+      }
+    });
+  };
 
   return (
     <SafeAreaView>
       <View style={formStyles.topBar}>
         <Text style={{fontSize: 24}}>
-          <Text style={{color: '#80E618'}}>Disease</Text> Prediction
+          <Text style={{color: '#80E618'}}>Plant Disease</Text> Prediction
         </Text>
       </View>
       <ScrollView style={{marginTop: 20, marginBottom: 100}}>
         <View style={formStyles.formContainer}>
-          <Text style={formStyles.formHeader}>
-            Upload Image to Detect Disease
-          </Text>
           <View>
             <View>
-              {isImageUploaded ? <Text>true</Text> : <Text>false</Text>}
+              {(isImageUploaded) ? (<Image
+                source={{uri: imageSource}}
+                style={{width: 200, height: 200, alignSelf: 'center'}}
+              />) : (<Image
+                source={require('./Assets/uploadIcon.png')}
+                style={{width: 200, height: 200, alignSelf: 'center'}}
+              />)}
             </View>
-            <Pressable>
-              <Text>Upload</Text>
-            </Pressable>
+            {
+              isImageUploaded ? null : (<Text style={formStyles.formHeader}>Upload Image</Text>)
+            }
+            <View style={formStyles.buttonContainer}>
+              <Pressable style={formStyles.buttonP} onPress={selectImage}>
+                <Text style={{color: 'white'}}>Upload</Text>
+              </Pressable>
+              <Pressable style={formStyles.button} onPress={()=>{
+                setIsImageUploaded(false);
+                setImageSource('');
+              }}>
+                <Text style={{color: '#80E618'}}>Reset</Text>
+              </Pressable>
+            </View>
           </View>
           {isImageUploaded ? (
             <Pressable
-              onPress={async () => {
-                try {
-                  const response = await fetch(
-                    'https://temp-ecoharvest.onrender.com/crop_predict',
-                    {
-                      method: 'POST',
-                      headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                        // Req body goes here
-                      }),
-                    },
-                  );
+              onPress={() => {
+                const formData = new FormData();
+                formData.append('image', {
+                  uri: imageSource,
+                  type: 'image/jpeg',
+                  name: 'image.jpg',
+                });
 
-                  const data = await response.json();
-
-                  // setPrediction(data.prediction);
-                } catch (e) {
-                  console.log(e);
-                }
+                fetch('https://ecoharvest-tvtc.onrender.com/detect/plantdisease', {
+                  method: 'POST',
+                  body: formData,
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    // Handle the response data
+                    console.log(data);
+                    setPredictedDisease(data.predicted_disease);
+                    setIsPredicted(true);
+                  })
+                  .catch(error => {
+                    // Handle the error
+                    console.error(error);
+                  });
               }}
               style={{
                 backgroundColor: '#80E618',
@@ -65,6 +103,7 @@ export default function PlantDiseasePredictionPage() {
                 borderRadius: 10,
                 marginLeft: 'auto',
                 marginRight: 'auto',
+                marginBottom: 10,
               }}>
               <Text style={{color: 'white'}}>Detect</Text>
             </Pressable>
@@ -72,9 +111,11 @@ export default function PlantDiseasePredictionPage() {
         </View>
         <View>
           {/* Predicted Values */}
-          <Text style={formStyles.formHeader}>
-            Predicted Crop is <Text style={{color: '#80E618'}}>detected</Text>
-          </Text>
+          {
+            isPredicted ? (<Text style={formStyles.formHeader}>
+              Predicted Crop is <Text style={{color: '#80E618'}}>{predictedDisease}</Text>
+            </Text>) : null
+          }
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -88,6 +129,9 @@ const formStyles = StyleSheet.create({
     marginBottom: 20,
   },
   formContainer: {
+    padding: 20,
+    borderWidth: 1,
+    borderRadius: 10,
     margin: 20,
   },
   formInput: {
@@ -141,5 +185,29 @@ const formStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#80E618',
     gap: 40,
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    padding: 20,
+  },
+  button: {
+    // backgroundColor: 'white',
+    borderColor: '#80E618',
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+  },
+  buttonP: {
+    backgroundColor: '#80E618',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
   },
 });

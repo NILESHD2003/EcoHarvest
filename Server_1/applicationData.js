@@ -1,3 +1,6 @@
+const { verify } = require("jsonwebtoken");
+const { version } = require("mongoose");
+
 const data = [
     {
         version: '1.0.0',
@@ -34,6 +37,12 @@ const data = [
         platform: 'android',
         desc: 'Added haptic feedbaacks and Carousel',
         package_name: 'EcoHarvest2.1.2.apk',
+    },
+    {
+        version: '2.2.0',
+        platform: 'android',
+        desc: 'Added Plant Disease Detection feature',
+        package_name: 'EcoHarvest2.2.0.apk',
     }
 ];
 
