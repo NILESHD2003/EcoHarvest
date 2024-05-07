@@ -15,7 +15,12 @@ database.connect();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors()); // Enable CORS for all routes
+app.use(
+        cors({
+                origin: "*",
+                credentials: true,
+        })
+); // Enable CORS for all routes
 app.use(
     fileUpload({
         useTempFiles: true,
