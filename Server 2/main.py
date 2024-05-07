@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from torchvision import models, transforms
 from PIL import Image
 import pandas as pd
+from flask_cors import CORS
 import json
 import torch
 import base64
@@ -11,6 +12,7 @@ import pickle
 import io
 
 app = Flask(__name__)
+CORS(app)
 ###################################### PLANT DISEASE DETECTION PKL  ################################## 
 # Load the model
 with gzip.open('model.pkl.gz', 'rb') as f:
