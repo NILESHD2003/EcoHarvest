@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from torchvision import models, transforms
 from PIL import Image
 import pandas as pd
+from flask_cors import CORS
 import json
 import torch
 import base64
@@ -11,6 +12,7 @@ import pickle
 import io
 
 app = Flask(__name__)
+CORS(app)
 ###################################### PLANT DISEASE DETECTION PKL  ################################## 
 # Load the model
 with gzip.open('model.pkl.gz', 'rb') as f:
@@ -87,8 +89,8 @@ def predict_fertilizer():
     temperature = data['Temperature']
     humidity = data['Humidity']
     moisture = data['Moisture']
-    soil_type = data['Soil Type']
-    crop_type = data['Crop Type']
+    soil_type = data['Soil_Type']
+    crop_type = data['Crop_Type']
     nitrogen = data['Nitrogen']
     potassium = data['Potassium']
     phosphorous = data['Phosphorous']

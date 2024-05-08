@@ -6,4 +6,5 @@ scikit-learn
 torch
 Pillow
 torchvision
+flask-cors
 gunicorn
