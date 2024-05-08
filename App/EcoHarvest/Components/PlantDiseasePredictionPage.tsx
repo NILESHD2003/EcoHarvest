@@ -113,7 +113,7 @@ export default function PlantDiseasePredictionPage() {
           {/* Predicted Values */}
           {
             isPredicted ? (<Text style={formStyles.formHeader}>
-              Predicted Crop is <Text style={{color: '#80E618'}}>{predictedDisease}</Text>
+              Detected Disease : <Text style={{color: '#80E618'}}>{predictedDisease}</Text>
             </Text>) : null
           }
         </View>

@@ -9,7 +9,13 @@ import {
 } from 'react-native';
 import React from 'react';
 
-export default function FertiliserPredictionPage({navigation}: {navigation: any}) {
+import {Picker} from '@react-native-picker/picker';
+
+export default function FertiliserPredictionPage({
+  navigation,
+}: {
+  navigation: any;
+}) {
   const [temperature, setTemperature] = React.useState('');
   const [humidity, setHumidity] = React.useState('');
   const [moisture, setMoisture] = React.useState('');
@@ -18,8 +24,8 @@ export default function FertiliserPredictionPage({navigation}: {navigation: any}
   const [nitrogen, setNitrogen] = React.useState('');
   const [potassium, setPotassium] = React.useState('');
   const [phosphorous, setPhosphorous] = React.useState('');
-
   const [prediction, setPrediction] = React.useState('');
+  const [isPredicted, setIsPredicted] = React.useState(false);
 
   return (
     <SafeAreaView>
@@ -33,91 +39,142 @@ export default function FertiliserPredictionPage({navigation}: {navigation: any}
           <Text style={formStyles.formHeader}>
             Enter Details to get Prediction
           </Text>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Temperature</Text>
-            <TextInput
-              value={temperature}
-              onChangeText={text => {
-                setTemperature(text);
-              }}
-              style={formStyles.formInput}
-              keyboardType="decimal-pad"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Temperature</Text>
+            <View style={formStyles.unit}>
+              <TextInput
+                style={formStyles.input}
+                onChangeText={setTemperature}
+                value={temperature}
+                keyboardType="numeric"
+                onChange={()=>{
+                  setIsPredicted(false)
+                }}
+              />
+              <Text style={{fontSize: 24}}>&deg;C</Text>
+            </View>
           </View>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Humidity</Text>
-            <TextInput
-              value={humidity}
-              onChangeText={text => {
-                setHumidity(text);
-              }}
-              style={formStyles.formInput}
-              keyboardType="numeric"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Humidity</Text>
+            <View style={formStyles.unit}>
+              <TextInput
+                style={formStyles.input}
+                onChangeText={setHumidity}
+                value={humidity}
+                keyboardType="numeric"
+                onChange={()=>{
+                  setIsPredicted(false)
+                }}
+              />
+              <Text style={{fontSize: 24, minWidth: 200}}>
+                g/m<Text style={{fontSize: 16}}>3</Text>
+              </Text>
+            </View>
           </View>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Moisture</Text>
-            <TextInput
-              value={moisture}
-              onChangeText={text => {
-                setMoisture(text);
-              }}
-              style={formStyles.formInput}
-              keyboardType="numeric"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Moisture</Text>
+            <View style={formStyles.unit}>
+              <TextInput
+                style={formStyles.input}
+                onChangeText={setMoisture}
+                value={moisture}
+                keyboardType="numeric"
+                onChange={()=>{
+                  setIsPredicted(false)
+                }}
+              />
+              <Text style={{fontSize: 24, minWidth: 200}}>
+                g/m<Text style={{fontSize: 16}}>3</Text>
+              </Text>
+            </View>
           </View>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Soil Type</Text>
-            <TextInput
-              value={soilType}
-              onChangeText={text => {
-                setSoilType(text);
-              }}
-              style={formStyles.formInput2}
-              keyboardType="default"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Soil Type</Text>
+            <View style={formStyles.dropdown}>
+              <Picker
+                selectedValue={soilType}
+                onValueChange={itemValue => setSoilType(itemValue)}
+                >
+                <Picker.Item label="Select" value="" />
+                <Picker.Item label="Clay" value="Clay" />
+                <Picker.Item label="Sandy" value="Sandy" />
+                <Picker.Item label="Loamy" value="Loamy" />
+                <Picker.Item label="Black" value="Black" />
+                <Picker.Item label="Red" value="Red" />
+              </Picker>
+            </View>
           </View>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Crop Type</Text>
-            <TextInput
-              value={cropType}
-              onChangeText={text => {
-                setCropType(text);
-              }}
-              style={formStyles.formInput2}
-              keyboardType="default"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Crop Type</Text>
+            <View style={formStyles.dropdown}>
+              <Picker
+                selectedValue={cropType}
+                onValueChange={itemValue => setCropType(itemValue)}>
+                <Picker.Item label="Select" value="" />
+                <Picker.Item label="Maize" value="Maize" />
+                <Picker.Item label="Sugarcane" value="Sugarcane" />
+                <Picker.Item label="Cotton" value="Cotton" />
+                <Picker.Item label="Tobacco" value="Tobacco" />
+                <Picker.Item label="Paddy" value="Paddy" />
+                <Picker.Item label="Barley" value="Barley" />
+                <Picker.Item label="Wheat" value="Wheat" />
+                <Picker.Item label="Millets" value="Millets" />
+                <Picker.Item label="Oil Seeds" value="Oil Seeds" />
+                <Picker.Item label="Pulses" value="Pulses" />
+                <Picker.Item label="Ground Nuts" value="Ground Nuts" />
+              </Picker>
+            </View>
           </View>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Nitrogen</Text>
-            <TextInput
-              value={nitrogen}
-              onChangeText={text => {
-                setNitrogen(text);
-              }}
-              style={formStyles.formInput}
-              keyboardType="numeric"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Nitrogen</Text>
+            <View style={formStyles.unit}>
+              <TextInput
+                style={formStyles.input}
+                onChangeText={setNitrogen}
+                value={nitrogen}
+                keyboardType="numeric"
+                onChange={()=>{
+                  setIsPredicted(false)
+                }}
+              />
+              <Text style={{fontSize: 24}}>%</Text>
+            </View>
           </View>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Potassium</Text>
-            <TextInput
-              value={potassium}
-              onChangeText={text => {
-                setPotassium(text);
-              }}
-              style={formStyles.formInput}
-              keyboardType="numeric"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Phosphorous</Text>
+            <View style={formStyles.unit}>
+              <TextInput
+                style={formStyles.input}
+                onChangeText={setPhosphorous}
+                value={phosphorous}
+                keyboardType="numeric"
+                onChange={()=>{
+                  setIsPredicted(false)
+                }}
+              />
+              <Text style={{fontSize: 24}}>%</Text>
+            </View>
           </View>
-          <View style={formStyles.formElement}>
-            <Text style={formStyles.formLabel}>Phosphorous</Text>
-            <TextInput
-              value={phosphorous}
-              onChangeText={text => {
-                setPhosphorous(text);
-              }}
-              style={formStyles.formInput}
-              keyboardType="numeric"></TextInput>
+          <View style={formStyles.element}>
+            <Text style={{fontSize: 24, minWidth: 200}}>Potassium</Text>
+            <View style={formStyles.unit}>
+              <TextInput
+                style={formStyles.input}
+                onChangeText={setPotassium}
+                value={potassium}
+                keyboardType="numeric"
+                onChange={()=>{
+                  setIsPredicted(false)
+                }}
+              />
+              <Text style={{fontSize: 24}}>%</Text>
+            </View>
           </View>
           <Pressable
             onPress={async () => {
               try {
                 const response = await fetch(
-                  'https://temp-ecoharvest.onrender.com/fertilizer_predict',
+                  'https://ecoharvest-tvtc.onrender.com/predict/fertilizer',
                   {
                     method: 'POST',
                     headers: {
@@ -128,19 +185,20 @@ export default function FertiliserPredictionPage({navigation}: {navigation: any}
                       Temperature: temperature,
                       Humidity: humidity,
                       Moisture: moisture,
-                      'Soil Type': soilType,
-                      'Crop Type': cropType,
+                      Soil_Type: soilType,
+                      Crop_Type: cropType,
                       Nitrogen: nitrogen,
                       Potassium: potassium,
                       Phosphorous: phosphorous,
                     }),
                   },
                 );
-                
-                console.log(response)
+
+                console.log(response);
                 const data = await response.json();
 
                 setPrediction(data.predicted_fertilizer_name);
+                setIsPredicted(true);
               } catch (e) {
                 console.log(e);
               }
@@ -154,13 +212,21 @@ export default function FertiliserPredictionPage({navigation}: {navigation: any}
               borderRadius: 10,
               marginLeft: 'auto',
               marginRight: 'auto',
+              marginBottom: 10,
             }}>
             <Text style={{color: 'white'}}>Predict</Text>
           </Pressable>
         </View>
         <View>
           {/* Predicted Values */}
-          <Text style={formStyles.formHeader}>Predicted Fertiliser is{" "}<Text style = {{color: '#80E618'}}>{prediction}</Text></Text>
+          {
+            isPredicted ? (
+              <Text style={formStyles.formHeader}>
+                Predicted Fertilizer is{' '}
+                <Text style={{color: '#80E618'}}>{prediction}</Text>
+              </Text>
+            ) : null
+          }
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -171,36 +237,13 @@ const formStyles = StyleSheet.create({
   formHeader: {
     fontSize: 24,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   formContainer: {
-    margin: 20,
-  },
-  formInput: {
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#80E618',
-    padding: 10,
-    marginBottom: 10,
-    marginLeft: 'auto',
-    height: 60,
-    width: 60,
-    marginRight: '40%',
-  },
-  formLabel: {
-    marginBottom: 10,
-    fontSize: 18,
-  },
-  formInput2: {
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#80E618',
-    padding: 10,
-    marginBottom: 10,
-    marginLeft: 'auto',
-    height: 60,
-    width: 200,
-    marginRight: '5%',
+    marginTop: 20,
+    marginRight: 20,
+    marginLeft: 20,
+    gap: 20,
   },
   formButton: {
     backgroundColor: 'blue',
@@ -208,15 +251,10 @@ const formStyles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 20
   },
   formButtonText: {
     color: 'white',
-  },
-  formElement: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
   },
   topBar: {
     display: 'flex',
@@ -227,5 +265,33 @@ const formStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#80E618',
     gap: 40,
+  },
+  element: {
+    // backgroundColor: 'aquamarine',
+    display: 'flex',
+    flexDirection: 'row',
+    // justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  input: {
+    // backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'grey',
+    borderRadius: 5,
+    height: 40,
+    width: 80,
+  },
+  unit: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  dropdown: {
+    // backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'grey',
+    borderRadius: 5,
+    width: 150,
   },
 });

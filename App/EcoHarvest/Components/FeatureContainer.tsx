@@ -124,15 +124,17 @@ export default function FeatureContainer({navigation}: {navigation: any}) {
               <Text style={homeStyles.featureDesc}>Know which crops will thrive in your soil</Text>
             </View>
           </Pressable>
+          <Pressable onPress={() => {
+              navigation.navigate('Yeild Prediction Page');
+            }}>
+            <View style={homeStyles.featureBox}>
+              <Text style={homeStyles.featureTitle}>Yeild Prediction</Text>
+              <Text style={homeStyles.featureDesc}>Estimate crop yield for better harvest planning.</Text>
+            </View>
+          </Pressable>
           <Text style={homeStyles.featureHeader}>
             Our <Text style={homeStyles.greenText}>Upcoming Features</Text>
           </Text>
-          <Pressable>
-            <View style={homeStyles.featureBox}>
-              <Text style={homeStyles.featureTitle}>Yeild Prediction</Text>
-              <Text style={homeStyles.featureDesc}>props.description</Text>
-            </View>
-          </Pressable>
           <Pressable>
             <View style={homeStyles.featureBox}>
               <Text style={homeStyles.featureTitle}>Grading n Sorting</Text>

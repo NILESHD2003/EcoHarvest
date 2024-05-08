@@ -14,6 +14,7 @@ import FeatureContainer from './FeatureContainer';
 import PlantDiseasePredictionPage from './PlantDiseasePredictionPage';
 import FertiliserPredictionPage from './FertiliserPredictionPage';
 import CropPredictionPage from './CropPredictionPage';
+import YeildPredictionPage from './YeildPredictionPage';
 
 const Stack2 = createNativeStackNavigator();
 
@@ -45,7 +46,13 @@ export default function Home({navigation}: {navigation: any}) {
           }}
           name="Crop Prediction Page"
           component={CropPredictionPage}></Stack2.Screen>
-      </Stack2.Navigator>
+          <Stack2.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="Yeild Prediction Page"
+          component={YeildPredictionPage}></Stack2.Screen>
+      </Stack2.Navigator>    
     </NavigationContainer>
   );
 }

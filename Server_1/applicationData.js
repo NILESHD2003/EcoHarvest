@@ -43,6 +43,12 @@ const data = [
         platform: 'android',
         desc: 'Added Plant Disease Detection feature',
         package_name: 'EcoHarvest2.2.0.apk',
+    },
+    {
+        version: '2.3.0',
+        platform: 'android',
+        desc: 'Added Yeild Prediction feature and Enhanced UI',
+        package_name: 'EcoHarvest2.3.0.apk',
     }
 ];
 

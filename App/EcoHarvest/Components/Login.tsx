@@ -17,7 +17,8 @@ export default function Login({navigation}: {navigation: any}) {
   return (
     <View style={loginStyles.loginContainer}>
       <View>
-        <Text style={loginStyles.loginHeader}>Welcome Back To</Text>
+        <Text style={loginStyles.loginHeader}>Welcome Back</Text>
+        <Text style={loginStyles.loginHeader}>To</Text>
         <Text style={[loginStyles.loginHeader, loginStyles.greenText]}>
           EcoHarvest
         </Text>
