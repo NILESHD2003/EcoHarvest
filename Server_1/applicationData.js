@@ -49,6 +49,12 @@ const data = [
         platform: 'android',
         desc: 'Added Yeild Prediction feature and Enhanced UI',
         package_name: 'EcoHarvest2.3.0.apk',
+    },
+    {
+        version: '2.3.1',
+        platform: 'android',
+        desc: 'Fixed UI glitches',
+        package_name: 'EcoHarvest2.3.1.apk',
     }
 ];
 

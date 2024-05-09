@@ -128,7 +128,7 @@ export default function FeatureContainer({navigation}: {navigation: any}) {
               navigation.navigate('Yeild Prediction Page');
             }}>
             <View style={homeStyles.featureBox}>
-              <Text style={homeStyles.featureTitle}>Yeild Prediction</Text>
+              <Text style={homeStyles.featureTitle}>Yield Prediction</Text>
               <Text style={homeStyles.featureDesc}>Estimate crop yield for better harvest planning.</Text>
             </View>
           </Pressable>

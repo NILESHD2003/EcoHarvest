@@ -40,7 +40,7 @@ export default function FertiliserPredictionPage({
             Enter Details to get Prediction
           </Text>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Temperature</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Temperature</Text>
             <View style={formStyles.unit}>
               <TextInput
                 style={formStyles.input}
@@ -55,7 +55,7 @@ export default function FertiliserPredictionPage({
             </View>
           </View>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Humidity</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Humidity</Text>
             <View style={formStyles.unit}>
               <TextInput
                 style={formStyles.input}
@@ -66,13 +66,13 @@ export default function FertiliserPredictionPage({
                   setIsPredicted(false)
                 }}
               />
-              <Text style={{fontSize: 24, minWidth: 200}}>
+              <Text style={{fontSize: 24, minWidth: '50%'}}>
                 g/m<Text style={{fontSize: 16}}>3</Text>
               </Text>
             </View>
           </View>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Moisture</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Moisture</Text>
             <View style={formStyles.unit}>
               <TextInput
                 style={formStyles.input}
@@ -83,13 +83,13 @@ export default function FertiliserPredictionPage({
                   setIsPredicted(false)
                 }}
               />
-              <Text style={{fontSize: 24, minWidth: 200}}>
+              <Text style={{fontSize: 24, minWidth: '50%'}}>
                 g/m<Text style={{fontSize: 16}}>3</Text>
               </Text>
             </View>
           </View>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Soil Type</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Soil Type</Text>
             <View style={formStyles.dropdown}>
               <Picker
                 selectedValue={soilType}
@@ -105,7 +105,7 @@ export default function FertiliserPredictionPage({
             </View>
           </View>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Crop Type</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Crop Type</Text>
             <View style={formStyles.dropdown}>
               <Picker
                 selectedValue={cropType}
@@ -126,7 +126,7 @@ export default function FertiliserPredictionPage({
             </View>
           </View>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Nitrogen</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Nitrogen</Text>
             <View style={formStyles.unit}>
               <TextInput
                 style={formStyles.input}
@@ -141,7 +141,7 @@ export default function FertiliserPredictionPage({
             </View>
           </View>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Phosphorous</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Phosphorous</Text>
             <View style={formStyles.unit}>
               <TextInput
                 style={formStyles.input}
@@ -156,7 +156,7 @@ export default function FertiliserPredictionPage({
             </View>
           </View>
           <View style={formStyles.element}>
-            <Text style={{fontSize: 24, minWidth: 200}}>Potassium</Text>
+            <Text style={{fontSize: 24, minWidth: '50%'}}>Potassium</Text>
             <View style={formStyles.unit}>
               <TextInput
                 style={formStyles.input}

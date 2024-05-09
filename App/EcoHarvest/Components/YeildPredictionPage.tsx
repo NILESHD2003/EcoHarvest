@@ -43,7 +43,7 @@ export default function YeildPredictionPage() {
           Enter Details to get Prediction
         </Text>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Crop</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Crop</Text>
           <View style={formStyles.dropdown}>
             <Picker
               selectedValue={crop}
@@ -109,7 +109,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Season</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Season</Text>
           <View style={formStyles.dropdown}>
             <Picker
               selectedValue={season}
@@ -125,7 +125,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>State</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>State</Text>
           <View style={formStyles.dropdown}>
             <Picker
               selectedValue={state}
@@ -165,7 +165,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Crop Year</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Crop Year</Text>
           <View style={formStyles.unit}>
             <TextInput
               style={formStyles.input}
@@ -179,7 +179,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Area</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Area</Text>
           <View style={formStyles.unit}>
             <TextInput
               style={formStyles.input}
@@ -194,7 +194,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Production</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Production</Text>
           <View style={formStyles.unit}>
             <TextInput
               style={formStyles.input}
@@ -209,7 +209,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Annual Rainfall</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Annual Rainfall</Text>
           <View style={formStyles.unit}>
             <TextInput
               style={formStyles.input}
@@ -224,7 +224,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Fertilizer</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Fertilizer</Text>
           <View style={formStyles.unit}>
             <TextInput
               style={formStyles.input}
@@ -239,7 +239,7 @@ export default function YeildPredictionPage() {
           </View>
         </View>
         <View style={formStyles.element}>
-          <Text style={{fontSize: 24, minWidth: 200}}>Pesticide</Text>
+          <Text style={{fontSize: 24, minWidth: '50%'}}>Pesticide</Text>
           <View style={formStyles.unit}>
             <TextInput
               style={formStyles.input}
@@ -308,7 +308,7 @@ export default function YeildPredictionPage() {
         {
           isPredicted ? (
             <Text style={formStyles.formHeader}>
-              Predicted Fertilizer is{' '}
+              Predicted Yield is{' '}
               <Text style={{color: '#80E618'}}>{prediction}%</Text>
             </Text>
           ) : null
