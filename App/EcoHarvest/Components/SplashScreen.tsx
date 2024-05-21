@@ -7,9 +7,9 @@ export default function SplashScreen({navigation}: {navigation: any}) {
   const checkLogin = async () => {
     const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
     if (isLoggedIn === 'true') {
-      navigation.navigate('Landing Page');
+      navigation.replace('Landing Page');
     } else {
-      navigation.navigate('Login Page');
+      navigation.replace('Login Page');
     }
   };
   setTimeout(() => {

@@ -16,10 +16,10 @@ database.connect();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-        cors({
-                origin: "*",
-                credentials: true,
-        })
+    cors({
+        origin: "*",
+        credentials: true,
+    })
 ); // Enable CORS for all routes
 app.use(
     fileUpload({
@@ -47,18 +47,18 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/api/v1/application/get-app/specific/:package" ,async (req, res) => {
-    try{
+app.get("/api/v1/application/get-app/specific/:package", async (req, res) => {
+    try {
         const reqPackage = req.params['package'];
         const filePath = `./Resources/${reqPackage}`;
-        
+
         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
         res.setHeader('Content-Length', fs.statSync(filePath).size);
-      
+
         // Stream the APK file to the client.
         const readStream = fs.createReadStream(filePath);
         readStream.pipe(res);
-    }catch(e){
+    } catch (e) {
         console.error(e);
 
         return res.status(500).json({
@@ -68,18 +68,18 @@ app.get("/api/v1/application/get-app/specific/:package" ,async (req, res) => {
     }
 })
 
-app.get("/api/v1/application/get-app" ,async (req, res) => {
-    try{
+app.get("/api/v1/application/get-app", async (req, res) => {
+    try {
         const latestVersion = data[data.length - 1];
         const filePath = `./Resources/${latestVersion.package_name}`;
 
         res.setHeader('Content-Type', 'application/vnd.android.package-archive');
         res.setHeader('Content-Length', fs.statSync(filePath).size);
-      
+
         // Stream the APK file to the client.
         const readStream = fs.createReadStream(filePath);
         readStream.pipe(res);
-    }catch(e){
+    } catch (e) {
         console.error(e);
 
         return res.status(500).json({

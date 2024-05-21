@@ -55,6 +55,12 @@ const data = [
         platform: 'android',
         desc: 'Fixed UI glitches',
         package_name: 'EcoHarvest2.3.1.apk',
+    },
+    {
+        version: '2.3.2',
+        platform: 'android',
+        desc: 'Fixed return to Home Screen issue',
+        package_name: 'EcoHarvest2.3.2.apk',
     }
 ];
 

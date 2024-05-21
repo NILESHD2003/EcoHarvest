@@ -7,7 +7,7 @@ import Home from './Home';
 
 const Tab = createBottomTabNavigator();
 
-export default function LandingPage() {
+export default function LandingPage({navigation}: {navigation: any}) {
   return (
     <Tab.Navigator initialRouteName='Home'>
       <Tab.Screen
