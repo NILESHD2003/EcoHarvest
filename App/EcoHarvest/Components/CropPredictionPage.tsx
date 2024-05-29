@@ -6,11 +6,14 @@ import {
   Pressable,
   TextInput,
   ScrollView,
+  useColorScheme
 } from 'react-native';
 import React from 'react';
 
 
 export default function CropPredictionPage({navigation}: {navigation: any}) {
+  const isDark = useColorScheme() === 'dark';
+  
   const [temperature, setTemperature] = React.useState('');
   const [N, setN] = React.useState('');
   const [P, setP] = React.useState('');
@@ -22,7 +25,7 @@ export default function CropPredictionPage({navigation}: {navigation: any}) {
   const [isPredicted, setIsPredicted] = React.useState(false);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style = {[{flex: 1}, isDark ? {backgroundColor: '#121212'} : null]}>
       <View style={formStyles.topBar}>
         <Text style={{fontSize: 24}}>
           <Text style={{color: '#80E618'}}>Crop</Text> Prediction

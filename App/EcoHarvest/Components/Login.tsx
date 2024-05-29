@@ -4,7 +4,8 @@ import {
   Pressable,
   StyleSheet,
   TextInput,
-  Vibration
+  Vibration,
+  useColorScheme
 } from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,9 +14,9 @@ export default function Login({navigation}: {navigation: any}) {
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [showError, setShowError] = React.useState(false);
-
+  const isDark = useColorScheme() === 'dark';
   return (
-    <View style={loginStyles.loginContainer}>
+    <View style={[loginStyles.loginContainer, isDark ? {backgroundColor: '#121212'} : null]}>
       <View>
         <Text style={loginStyles.loginHeader}>Welcome Back</Text>
         <Text style={loginStyles.loginHeader}>To</Text>

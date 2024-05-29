@@ -8,11 +8,13 @@ import {
   StyleSheet,
   Text,
   View,
+  useColorScheme
 } from 'react-native';
 import React from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 export default function PlantDiseasePredictionPage() {
+  const isDark = useColorScheme() === 'dark';
   const [isImageUploaded, setIsImageUploaded] = React.useState(false);
   const [imageSource, setImageSource] = React.useState<string>('');
   const [predictedDisease, setPredictedDisease] = React.useState('');
@@ -35,7 +37,7 @@ export default function PlantDiseasePredictionPage() {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style = {[isDark ? {backgroundColor: '#121212'} : null, {flex: 1}]}>
       <View style={formStyles.topBar}>
         <Text style={{fontSize: 24}}>
           <Text style={{color: '#80E618'}}>Plant Disease</Text> Prediction

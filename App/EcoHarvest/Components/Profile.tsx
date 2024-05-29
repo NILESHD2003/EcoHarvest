@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  useColorScheme,
   View,
   Image,
   Pressable,
@@ -14,6 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
 
 export default function Profile({navigation}: {navigation: any}) {
+  const isDark = useColorScheme() === 'dark';
+  
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [appVersion, setAppVersion] = React.useState('1.0.0');
@@ -31,21 +33,20 @@ export default function Profile({navigation}: {navigation: any}) {
   };
   getData();
   return (
-    <SafeAreaView style={{flex: 1, padding: 20}}>
+    <SafeAreaView style={[{flex: 1, padding: 20}, isDark ? {backgroundColor: '#121212'} : null]}>
       <View style={[{flex: 0.2}, profileStyles.headerBox]}>
         <Text style={profileStyles.header}>Profile</Text>
       </View>
       <View style={{flex: 0.6}}>
         <View style={profileStyles.profile}>
           <Image source={require('./Assets/avatar.png')}></Image>
-          <Text style={{color: 'black', fontSize: 20}}>{name}</Text>
+          <Text style={[{fontSize: 20}, isDark ? {color : 'white'} : {color: 'black'}]}>{name}</Text>
           <Text
-            style={{
-              color: 'black',
+            style={[{
               fontSize: 16,
               marginTop: -10,
               marginBottom: 40,
-            }}>
+            }, isDark ? {color: 'white'} : {color: 'black'}]}>
             {email}
           </Text>
         </View>

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TextInput, Pressable, Vibration} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Pressable, Vibration, useColorScheme} from 'react-native';
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,6 +12,7 @@ const handleDigitChange = (
 };
 
 export default function OTP({navigation}: {navigation: any}) {
+  const isDark = useColorScheme() === 'dark';
   const [digit1, setDigit1] = React.useState('');
   const [digit2, setDigit2] = React.useState('');
   const [digit3, setDigit3] = React.useState('');
@@ -22,8 +23,8 @@ export default function OTP({navigation}: {navigation: any}) {
   const digit3Ref = React.useRef<TextInput>(null);
   const digit4Ref = React.useRef<TextInput>(null);
   return (
-    <View style={otpStyles.container}>
-      <Text style={otpStyles.header}>Enter the code we just mailed you at</Text>
+    <View style={[otpStyles.container, isDark ? {backgroundColor: '#121212'} : null]}>
+      <Text style={otpStyles.header}>Enter the code we just mailed you</Text>
       <View style={otpStyles.otpInput}>
         <TextInput
           onChangeText={text => setDigit1(text)}
@@ -133,6 +134,7 @@ export default function OTP({navigation}: {navigation: any}) {
 
 const otpStyles = StyleSheet.create({
   container: {
+    flex: 1,
     display: 'flex',
     gap: 40,
     justifyContent: 'center',

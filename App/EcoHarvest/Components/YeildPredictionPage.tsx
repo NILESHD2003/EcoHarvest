@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native'
+import { Pressable, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, useColorScheme } from 'react-native'
 import React from 'react'
 
 import {Picker} from '@react-native-picker/picker';
@@ -19,6 +19,8 @@ export default function YeildPredictionPage() {
     return result;
   }
 
+  const isDark = useColorScheme() === 'dark';
+
   const [isPredicted, setIsPredicted] = React.useState(false);
   const [crop, setCrop] = React.useState('');
   const [season, setSeason] = React.useState('');
@@ -31,7 +33,7 @@ export default function YeildPredictionPage() {
   const [pesticide, setPesticide] = React.useState('');
   const [prediction, setPrediction] = React.useState('');
   return (
-    <SafeAreaView>
+    <SafeAreaView style = {isDark ? {backgroundColor: '#121212'} : null}>
     <View style={formStyles.topBar}>
       <Text style={{fontSize: 24}}>
         <Text style={{color: '#80E618'}}>Yield</Text> Prediction

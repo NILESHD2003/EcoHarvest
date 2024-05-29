@@ -1,26 +1,29 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Text, View, useColorScheme} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Chat from './Chat';
 import Profile from './Profile';
 import Home from './Home';
 
 const Tab = createBottomTabNavigator();
 
 export default function LandingPage({navigation}: {navigation: any}) {
+  const isDark = useColorScheme() === 'dark';
   return (
     <Tab.Navigator initialRouteName='Home'>
       <Tab.Screen
         options={{
+          tabBarStyle: {
+            backgroundColor: isDark ? '#121212' : 'white',
+          },
           headerShown: false,
           tabBarLabel: ({focused}) => {
             return (
               <Text
-                style={{
+                style={[{
                   color: focused ? '#80E618' : 'gray',
                   fontSize: 12,
                   fontWeight: '600',
-                }}>
+                }]}>
                 Home
               </Text>
             );
@@ -33,14 +36,11 @@ export default function LandingPage({navigation}: {navigation: any}) {
         }}
         name="Home"
         component={Home}></Tab.Screen>
-      {/* <Tab.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="Chat"
-        component={Chat}></Tab.Screen> */}
       <Tab.Screen
         options={{
+          tabBarStyle: {
+            backgroundColor: isDark ? '#121212' : 'white',
+          },
           headerShown: false,
           tabBarLabel: ({focused}) => {
             return (

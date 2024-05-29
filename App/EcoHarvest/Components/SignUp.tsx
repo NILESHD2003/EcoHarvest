@@ -6,12 +6,14 @@ import {
   Text,
   TextInput,
   View,
-  Vibration
+  Vibration,
+  useColorScheme
 } from 'react-native';
 import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignUp({navigation}: {navigation: any}) {
+  const isDark = useColorScheme() === 'dark';
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -20,7 +22,7 @@ export default function SignUp({navigation}: {navigation: any}) {
   const [loadingStyle, setLoadingStyle] = React.useState({});
 
   return (
-    <ScrollView  contentContainerStyle = {{alignItems: 'center', gap: 90}} style={signupStyles.signupContainer} keyboardDismissMode='on-drag'>
+    <ScrollView  contentContainerStyle = {{alignItems: 'center', gap: 90}} style={[signupStyles.signupContainer, isDark ? {backgroundColor: '#121212'} : null]} keyboardDismissMode='on-drag'>
       <View>
         <Text style={signupStyles.signupHeader}>Welcome To</Text>
         <Text style={[signupStyles.signupHeader, signupStyles.greenText]}>

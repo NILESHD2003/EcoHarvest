@@ -6,6 +6,7 @@ import {
   Pressable,
   TextInput,
   ScrollView,
+  useColorScheme
 } from 'react-native';
 import React from 'react';
 
@@ -16,6 +17,8 @@ export default function FertiliserPredictionPage({
 }: {
   navigation: any;
 }) {
+  const isDark = useColorScheme() === 'dark';
+
   const [temperature, setTemperature] = React.useState('');
   const [humidity, setHumidity] = React.useState('');
   const [moisture, setMoisture] = React.useState('');
@@ -28,7 +31,7 @@ export default function FertiliserPredictionPage({
   const [isPredicted, setIsPredicted] = React.useState(false);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style = {isDark ? {backgroundColor: '#121212'} : null}>
       <View style={formStyles.topBar}>
         <Text style={{fontSize: 24}}>
           <Text style={{color: '#80E618'}}>Fertiliser</Text> Prediction
@@ -43,7 +46,7 @@ export default function FertiliserPredictionPage({
             <Text style={{fontSize: 24, minWidth: '50%'}}>Temperature</Text>
             <View style={formStyles.unit}>
               <TextInput
-                style={formStyles.input}
+                style={[formStyles.input]}
                 onChangeText={setTemperature}
                 value={temperature}
                 keyboardType="numeric"

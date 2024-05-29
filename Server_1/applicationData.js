@@ -61,6 +61,12 @@ const data = [
         platform: 'android',
         desc: 'Fixed return to Home Screen issue',
         package_name: 'EcoHarvest2.3.2.apk',
+    },
+    {
+        version: '2.4.0',
+        platform: 'android',
+        desc: 'Enhanced UI and Added Dark Mode Support',
+        package_name: 'EcoHarvest2.4.0.apk',
     }
 ];
 

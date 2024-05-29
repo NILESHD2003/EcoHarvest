@@ -8,12 +8,13 @@ import {
   StyleSheet,
   Text,
   View,
+  useColorScheme
 } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 
 const { width } = Dimensions.get('window');
 
-const Carousel = ({ images }) => {
+const Carousel = ({ images }: { images: any[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
 
@@ -27,16 +28,7 @@ const Carousel = ({ images }) => {
     return () => clearInterval(interval);
   }, [images]);
 
-  useEffect(() => {
-    if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({
-        animated: true,
-        index: currentIndex,
-      });
-    }
-  }, [currentIndex]);
-
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <Image source={item} style={styles.image} />
   );
 
@@ -74,13 +66,14 @@ const Carousel = ({ images }) => {
 
 
 export default function FeatureContainer({navigation}: {navigation: any}) {
+  const isDark = useColorScheme() === 'dark';
   const images = [
     require('./Assets/sliding1.jpg'),
     require('./Assets/sliding2.jpg'),
     require('./Assets/sliding3.jpg')
   ]
   return (
-    <SafeAreaView style={homeStyles.container}>
+    <SafeAreaView style={[homeStyles.container, isDark ? {backgroundColor: '#121212'}: null]}>
       <View>
         <Text style={[homeStyles.greenText, homeStyles.pageHeader]}>
           EcoHarvest
