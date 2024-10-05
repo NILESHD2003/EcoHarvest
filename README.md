@@ -49,10 +49,6 @@ With **EcoHarvest**, farmers can make data-driven decisions, improving the effic
 
 ## Technology Stack
 
-<!-- Add the technology stack here -->
-
-## Technology Stack
-
 **EcoHarvest** is built using a combination of modern technologies to provide a robust and scalable solution:
 
 ### Frontend:
@@ -72,10 +68,6 @@ With **EcoHarvest**, farmers can make data-driven decisions, improving the effic
 
 - **Python**: For building the machine learning models used in predictions.
 - **Scikit-learn**: A library for machine learning in Python used for implementing various predictive algorithms.
-
-### Other Technologies:
-
-- **Docker**: For containerizing the application components, ensuring consistency across different environments.
 
 ---
 
