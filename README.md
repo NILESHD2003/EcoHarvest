@@ -10,11 +10,8 @@
 2. [Features](#features)
 3. [Technology Stack](#technology-stack)
 4. [Installation](#installation)
-5. [Usage](#usage)
-6. [API Documentation](#api-documentation)
-7. [Contributing](#contributing)
-8. [License](#license)
-9. [Contact](#contact)
+5. [Screenshots](#screenshots) 
+6. [Contact](#contact)
 
 ---
 
